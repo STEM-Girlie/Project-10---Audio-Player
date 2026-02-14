@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project 10 - Audio Player</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script
+      src="https://kit.fontawesome.com/78d4387808.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="audio-player">
+        <nav>
+          <div class="circle">
+            <i class="fa-solid fa-angle-left"></i>
+          </div>
+          <div class="circle">
+            <i class="fa-solid fa-bars"></i>
+          </div>
+          <div class="circle">
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+        </nav>
+        <img
+          src="Media/cosmic-sound-waves-stockcake.webp"
+          alt=""
+          class="sound-img"
+        />
+        <h1>Aal Imraan</h1>
+        <p>Sh.Maher AlMuaiqly</p>
+
+        <audio id="track">
+          <source src="Media/003.mp3" type="audio/mpeg" />
+        </audio>
+        <input type="range" value="0" id="progress" />
+
+        <div class="controls">
+          <div><i class="fa-solid fa-backward"></i></div>
+          <div onclick="playPause()">
+            <i class="fa-solid fa-circle-play" id="ctrlIcon"></i>
+          </div>
+          <div><i class="fa-solid fa-forward"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let progress = document.getElementById("progress");
+      let track = document.getElementById("track");
+      let ctrlIcon = document.getElementById("ctrlIcon");
+
+      track.onloadedmetadata = function () {
+        progress.max = track.duration;
+        progress.value = track.currentTime;
+      };
+      function playPause() {
+        if (ctrlIcon.classList.contains("fa-circle-pause")) {
+          track.pause();
+          ctrlIcon.classList.remove("fa-circle-pause");
+          ctrlIcon.classList.add("fa-circle-play");
+        } else {
+          track.play();
+          ctrlIcon.classList.add("fa-circle-pause");
+          ctrlIcon.classList.remove("fa-circle-play");
+        }
+      }
+
+      if (track.play()) {
+        setInterval(() => {
+          progress.value = track.currentTime;
+        }, 500);
+      }
+
+      progress.onchange = function () {
+        track.play();
+        track.currentTime = progress.value;
+        ctrlIcon.classList.add("fa-circle-pause");
+        ctrlIcon.classList.remove("fa-circle-play");
+      };
+    </script>
+  </body>
+</html>
